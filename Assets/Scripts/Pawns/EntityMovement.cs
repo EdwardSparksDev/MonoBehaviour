@@ -21,7 +21,7 @@ public class EntityMovement : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] private float groundedCheckRadius;
     [SerializeField] private float groundedCheckDistance;
-    [SerializeField] private LayerMask groundCheckMask;
+    [SerializeField] public LayerMask groundCheckMask;
     #endregion
 
     #region Properties

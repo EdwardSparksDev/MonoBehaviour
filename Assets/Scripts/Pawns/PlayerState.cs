@@ -64,7 +64,11 @@ public class PlayerState : MonoBehaviour, IDamageable
         deathAnimation = GetComponent<DeathAnimation>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         ActiveRenderer = smallRenderer;
+    }
 
+
+    private void Start()
+    {
         smallRenderer.SpriteRenderer.sharedMaterial.SetFloat("_InvertColors", 0);
         bigRenderer.SpriteRenderer.sharedMaterial.SetFloat("_InvertColors", 0);
     }
@@ -121,8 +125,8 @@ public class PlayerState : MonoBehaviour, IDamageable
         bigRenderer.enabled = true;
         ActiveRenderer = bigRenderer;
 
-        capsuleCollider.size = new Vector2(bigMarioCollisionSize.x, bigMarioCollisionSize.y);
-        capsuleCollider.offset = new Vector2(bigMarioCollisionOffset.x, bigMarioCollisionOffset.y);
+        capsuleCollider.size = bigMarioCollisionSize;
+        capsuleCollider.offset = bigMarioCollisionOffset;
 
         StartCoroutine(ScaleAnimation((scaleAnimationDuration), smallRenderer, bigRenderer));
         invincibilityCR = StartCoroutine(DamageInvincibility(invincibilityWindowDuration));
@@ -149,8 +153,8 @@ public class PlayerState : MonoBehaviour, IDamageable
         fireRenderer.enabled = true;
         ActiveRenderer = fireRenderer;
 
-        capsuleCollider.size = new Vector2(bigMarioCollisionSize.x, bigMarioCollisionSize.y);
-        capsuleCollider.offset = new Vector2(bigMarioCollisionOffset.x, bigMarioCollisionOffset.y);
+        capsuleCollider.size = bigMarioCollisionSize;
+        capsuleCollider.offset = bigMarioCollisionOffset;
 
         StartCoroutine(ScaleAnimation((scaleAnimationDuration), bigRenderer, fireRenderer));
         invincibilityCR = StartCoroutine(DamageInvincibility(invincibilityWindowDuration));
@@ -169,17 +173,31 @@ public class PlayerState : MonoBehaviour, IDamageable
         if (invincibilityCR != null)
             StopCoroutine(invincibilityCR);
 
-        smallRenderer.enabled = true;
+        smallRenderer.enabled = false;
         fireRenderer.enabled = false;
         bigRenderer.enabled = false;
-        ActiveRenderer = smallRenderer;
 
-        capsuleCollider.size = new Vector2(smallMarioCollisionSize.x, smallMarioCollisionSize.y);
-        capsuleCollider.offset = new Vector2(smallMarioCollisionOffset.x, smallMarioCollisionOffset.y);
+        PlayerSpriteRenderer previousRenderer = null;
+        if (ActiveRenderer == fireRenderer)
+        {
+            previousRenderer = fireRenderer;
+            ActiveRenderer = bigRenderer;
+        }
+        else
+        {
+            previousRenderer = bigRenderer;
+            ActiveRenderer = smallRenderer;
+        }
 
-        StartCoroutine(ScaleAnimation((scaleAnimationDuration), bigRenderer, smallRenderer));
+        if (ActiveRenderer == smallRenderer)
+        {
+            capsuleCollider.size = smallMarioCollisionSize;
+            capsuleCollider.offset = smallMarioCollisionOffset;
+        }
+
+        StartCoroutine(ScaleAnimation((scaleAnimationDuration), previousRenderer, ActiveRenderer));
         invincibilityCR = StartCoroutine(DamageInvincibility(invincibilityWindowDuration * 2f));
-        flashingCR = StartCoroutine(SpriteFlashing(smallRenderer.SpriteRenderer, flashingAnimationDuration, flashingAnimationDelay));
+        flashingCR = StartCoroutine(SpriteFlashing(ActiveRenderer.SpriteRenderer, flashingAnimationDuration, flashingAnimationDelay));
     }
 
 

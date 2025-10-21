@@ -5953,7 +5953,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 400
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b6d2f3d85e1d6924981b17eda8d55927, type: 2}
   m_sharedMaterial: {fileID: -3314239903852485426, guid: b6d2f3d85e1d6924981b17eda8d55927, type: 2}
@@ -9935,6 +9935,10 @@ PrefabInstance:
       propertyPath: items.Array.data[0]
       value: 
       objectReference: {fileID: 8751493030842826337, guid: e29c00a2a1b57534d9b2491a33fd201c, type: 3}
+    - target: {fileID: 6051396281682191756, guid: e27453acea8554243a0e756f4341e553, type: 3}
+      propertyPath: items.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14817,7 +14821,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b6d2f3d85e1d6924981b17eda8d55927, type: 2}
   m_sharedMaterial: {fileID: -3314239903852485426, guid: b6d2f3d85e1d6924981b17eda8d55927, type: 2}
@@ -16335,6 +16339,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 16934091}
     m_Modifications:
+    - target: {fileID: 4924296343846101794, guid: 8e5c2d3ee29d2374985c7ac59e427a92, type: 3}
+      propertyPath: bounceMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7604192209878964584, guid: 8e5c2d3ee29d2374985c7ac59e427a92, type: 3}
       propertyPath: m_Name
       value: Koopa

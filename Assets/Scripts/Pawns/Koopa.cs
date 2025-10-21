@@ -21,6 +21,7 @@ public class Koopa : MonoBehaviour, IDamageable
     [SerializeField] private Sprite spt_Shell;
 
     [SerializeField] private LayerMask damageMask;
+    [SerializeField] private LayerMask bounceMask;
     [SerializeField] private float deathDelay;
     [SerializeField] private bool destroyPushedShellOffScreen;
 
@@ -77,7 +78,14 @@ public class Koopa : MonoBehaviour, IDamageable
             }
         }
         else if ((damageMask.value & (1 << other.gameObject.layer)) > 0)
+        {
             Hit();
+        }
+        else if (shelled && (bounceMask.value & (1 << other.gameObject.layer)) > 0)
+        {
+            EntityMovement movement = GetComponent<EntityMovement>();
+            movement.Direction = -movement.Direction;
+        }
     }
 
 
@@ -125,6 +133,7 @@ public class Koopa : MonoBehaviour, IDamageable
         EntityMovement movement = GetComponent<EntityMovement>();
         movement.Direction = direction.normalized;
         movement.Speed = shellSpeed;
+        movement.groundCheckMask = LayerMask.NameToLayer("Default");
         movement.enabled = true;
 
         gameObject.layer = LayerMask.NameToLayer("Shell");
